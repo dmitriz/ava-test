@@ -1,0 +1,12 @@
+{
+  "name": "ava-test",
+  "version": "1.0.0",
+  "description": "Basic AVA test example",
+  "scripts": {
+    "test": "npx ava **/*test.js",
+    "ava": "ava **/*test.js"
+  },
+  "devDependencies": {
+    "ava": "^6.2.0"
+  }
+}

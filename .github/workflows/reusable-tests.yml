@@ -1,23 +1,54 @@
 name: Reusable Test Workflow
 
 on:
-  workflow_call:  # This makes the workflow reusable
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use'
+        required: false
+        default: 'lts/*'
+        type: string
+      pnpm-version:
+        description: 'PNPM version to use'
+        required: false
+        default: 'latest'
+        type: string
+      working-directory:
+        description: 'Directory where commands should run'
+        required: false
+        default: '.'
+        type: string
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     
     steps:
       - uses: actions/checkout@v4
       
       - uses: pnpm/action-setup@v4
         with:
-          version: latest  # Use the latest PNPM version
+          version: ${{ inputs.pnpm-version }}
           
       - uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'  # Use latest LTS Node.js version
+          node-version: ${{ inputs.node-version }}
           cache: 'pnpm'
+          cache-dependency-path: ${{ inputs.working-directory }}/pnpm-lock.yaml
           
-      - run: pnpm install
-      - run: pnpm test
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Run tests
+        run: pnpm test
+        
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ${{ inputs.working-directory }}/coverage/
+          retention-days: 5

@@ -9,11 +9,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
     
-    strategy:
-      matrix:
-        # This uses the latest LTS version of Node.js
-        node-version: [lts/*]
-        
     steps:
       - uses: actions/checkout@v4
       
@@ -23,7 +18,7 @@ jobs:
           
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 'lts/*'  # Use latest LTS Node.js version
           cache: 'pnpm'
           
       - run: pnpm install

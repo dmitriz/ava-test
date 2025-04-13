@@ -11,8 +11,8 @@ jobs:
     
     strategy:
       matrix:
-        # This dynamically uses the latest LTS version and latest stable
-        node-version: [lts/*, 'latest']
+        # This uses the latest LTS version of Node.js
+        node-version: [lts/*]
         
     steps:
       - uses: actions/checkout@v4

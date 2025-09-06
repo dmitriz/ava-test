@@ -14,7 +14,7 @@ jobs:
         with:
           version: latest  # Use the latest PNPM version
           
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 'lts/*'  # Use latest LTS Node.js version
           cache: 'pnpm'

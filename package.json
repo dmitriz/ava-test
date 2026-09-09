@@ -6,6 +6,6 @@
     "test": "ava **/*test.js"
   },
   "devDependencies": {
-    "ava": "^6.2.0"
+    "ava": "^8.0.0"
   }
 }
